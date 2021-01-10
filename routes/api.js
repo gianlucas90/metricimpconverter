@@ -19,15 +19,6 @@ module.exports = function (app) {
     let initNum = convertHandler.getNum(input);
     let initUnit = convertHandler.getUnit(input);
 
-    let returnNum = convertHandler.convert(initNum, initUnit);
-    let returnUnit = convertHandler.getReturnUnit(initUnit);
-    let toString = convertHandler.getString(
-      initNum,
-      initUnit,
-      returnNum,
-      returnUnit
-    );
-
     let data;
 
     if (initUnit === 'invalid unit' && initNum === 'invalid number') {
@@ -37,6 +28,14 @@ module.exports = function (app) {
     } else if (initNum === 'invalid number') {
       data = 'invalid number';
     } else {
+      let returnNum = convertHandler.convert(initNum, initUnit);
+      let returnUnit = convertHandler.getReturnUnit(initUnit);
+      let toString = convertHandler.getString(
+        initNum,
+        initUnit,
+        returnNum,
+        returnUnit
+      );
       data = {
         initNum,
         initUnit,

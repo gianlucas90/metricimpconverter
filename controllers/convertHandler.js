@@ -10,14 +10,14 @@ const { init } = require('../server');
 
 function ConvertHandler() {
   this.getNum = function (input) {
-    let match = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g);
-    console.log(match);
-
+    let match = input.match(
+      /\d+\/\d+.\d+|\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g
+    );
     if (!match) return 1;
+    if (match.length > 1) return 'invalid number';
     let decimal = eval(match.toString());
-    console.log(decimal);
-
     if (isNaN(decimal)) return 'invalid number';
+
     return decimal;
   };
 
@@ -73,6 +73,9 @@ function ConvertHandler() {
       case 'L':
         result = 'gal';
         break;
+      case 'l':
+        result = 'gal';
+        break;
       case 'kg':
         result = 'lbs';
         break;
@@ -87,9 +90,32 @@ function ConvertHandler() {
   };
 
   this.spellOutUnit = function (unit) {
-    let result;
+    switch (unit) {
+      // imperial
+      case 'gal':
+        return 'gallons';
+        break;
+      case 'lbs':
+        return 'pounds';
+        break;
+      case 'mi':
+        return 'miles';
+        break;
 
-    return result;
+      // metric
+      case 'L':
+        return 'litres';
+        break;
+      case 'kg':
+        return 'kilograms';
+        break;
+      case 'km':
+        return 'kilometers';
+        break;
+      default:
+        console.log(`Sorry, we are out of cases.`);
+        return;
+    }
   };
 
   this.convert = function (initNum, initUnit) {
@@ -131,40 +157,11 @@ function ConvertHandler() {
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
     let result;
 
-    result = `${initNum} ${getFullName(
+    result = `${initNum} ${this.spellOutUnit(
       initUnit
-    )} converts to ${returnNum} ${getFullName(returnUnit)}`;
+    )} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
 
     return result;
-
-    function getFullName(input) {
-      switch (input) {
-        // imperial
-        case 'gal':
-          return 'gallons';
-          break;
-        case 'lbs':
-          return 'pounds';
-          break;
-        case 'mi':
-          return 'miles';
-          break;
-
-        // metric
-        case 'L':
-          return 'litres';
-          break;
-        case 'kg':
-          return 'kilograms';
-          break;
-        case 'km':
-          return 'kilometers';
-          break;
-        default:
-          console.log(`Sorry, we are out of cases.`);
-          return;
-      }
-    }
   };
 }
 
