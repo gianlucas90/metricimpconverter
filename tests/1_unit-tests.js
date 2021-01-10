@@ -39,6 +39,8 @@ suite('Unit Tests', function () {
     });
 
     test('Invalid Input (double fraction)', function (done) {
+      let input = '1/2.5/6lbs';
+      assert.equal(convertHandler.getNum(input), 'invalid number');
       done();
     });
 
