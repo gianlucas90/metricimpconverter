@@ -10,10 +10,15 @@ const { init } = require('../server');
 
 function ConvertHandler() {
   this.getNum = function (input) {
-    let num = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g);
-    if (!num) return 1;
-    if (isNaN(num)) return 'invalid number';
-    return eval(num.toString());
+    let match = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g);
+    console.log(match);
+
+    if (!match) return 1;
+    let decimal = eval(match.toString());
+    console.log(decimal);
+
+    if (isNaN(decimal)) return 'invalid number';
+    return decimal;
   };
 
   this.getUnit = function (input) {
@@ -119,6 +124,7 @@ function ConvertHandler() {
         console.log(`Sorry, we are out of cases.`);
     }
 
+    result = Math.round(result * 100000) / 100000;
     return result;
   };
 
