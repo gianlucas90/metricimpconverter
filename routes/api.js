@@ -19,10 +19,6 @@ module.exports = function (app) {
     let initNum = convertHandler.getNum(input);
     let initUnit = convertHandler.getUnit(input);
 
-    if (initUnit === 'invalid unit') {
-      res.status(500).send('invalid unit');
-    }
-
     let returnNum = convertHandler.convert(initNum, initUnit);
     let returnUnit = convertHandler.getReturnUnit(initUnit);
     let toString = convertHandler.getString(
@@ -32,12 +28,24 @@ module.exports = function (app) {
       returnUnit
     );
 
-    res.json({
-      initNum,
-      initUnit,
-      returnNum,
-      returnUnit,
-      string: toString,
-    });
+    let data;
+
+    if (initUnit === 'invalid unit' && initNum === 'invalid number') {
+      data = 'invalid number and unit';
+    } else if (initUnit === 'invalid unit') {
+      data = 'invalid unit';
+    } else if (initNum === 'invalid number') {
+      data = 'invalid number';
+    } else {
+      data = {
+        initNum,
+        initUnit,
+        returnNum,
+        returnUnit,
+        string: toString,
+      };
+    }
+
+    res.json(data);
   });
 };

@@ -12,6 +12,7 @@ function ConvertHandler() {
   this.getNum = function (input) {
     let num = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g);
     if (!num) return 1;
+    if (isNaN(num)) return 'invalid number';
     return eval(num.toString());
   };
 
@@ -28,8 +29,8 @@ function ConvertHandler() {
       case 'lbs':
         result = 'lbs';
         break;
-      case 'lbs':
-        result = 'lbs';
+      case 'mi':
+        result = 'mi';
         break;
 
       case 'l':
@@ -137,7 +138,7 @@ function ConvertHandler() {
           return 'gallons';
           break;
         case 'lbs':
-          return 'libes';
+          return 'pounds';
           break;
         case 'mi':
           return 'miles';
