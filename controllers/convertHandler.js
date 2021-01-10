@@ -6,15 +6,46 @@
  *
  */
 
+const { init } = require('../server');
+
 function ConvertHandler() {
   this.getNum = function (input) {
-    let num = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g).toString();
-    return eval(num);
-    // return Math.round((num + Number.EPSILON) * 100) / 100;
+    let num = input.match(/\d+\.\d+\/\d+|\d+\.\d+|\d\/\d|\d+|\d+/g);
+    if (!num) return 1;
+    return eval(num.toString());
   };
 
   this.getUnit = function (input) {
-    return input.match(/[a-zA-Z]+/g).toString();
+    let initUnit = input
+      .toLowerCase()
+      .match(/[a-zA-Z]+/g)
+      .toString();
+
+    switch (initUnit) {
+      case 'gal':
+        result = 'gal';
+        break;
+      case 'lbs':
+        result = 'lbs';
+        break;
+      case 'lbs':
+        result = 'lbs';
+        break;
+
+      case 'l':
+        result = 'L';
+        break;
+      case 'kg':
+        result = 'kg';
+        break;
+      case 'km':
+        result = 'km';
+        break;
+      default:
+        result = 'invalid unit';
+    }
+
+    return result;
   };
 
   this.getReturnUnit = function (initUnit) {
@@ -43,7 +74,7 @@ function ConvertHandler() {
         result = 'mi';
         break;
       default:
-        console.log(`Sorry, we are out of cases.`);
+        result = 'not defined return unit';
     }
 
     return result;
